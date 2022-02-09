@@ -1,3 +1,5 @@
+import 'default_bmi_status.dart';
+
 enum Gender{
   male, female
 }
@@ -7,12 +9,14 @@ class PersonData {
   late double _height;
   late int _weight;
   late int _age;
+  late DefaultBMIStatus _defaultBMIStatus;
 
-  PersonData({required gender, required height, required weight, required age}) {
+  PersonData({required gender, required height, required weight, required age, required defaultBMIStatus}) {
     _gender = gender;
     _height = height;
     _weight = weight;
     _age = age;
+    _defaultBMIStatus = defaultBMIStatus;
   }
 
   Gender getGender() {
@@ -55,9 +59,23 @@ class PersonData {
     return _age;
   }
 
-  double calcBMI() {
+  void calcBMI() {
     double mHeight = _height/100;
-    print(_weight/(mHeight*mHeight));
-    return _weight/(mHeight*mHeight);
+    double bmiCalc = _weight/(mHeight*mHeight);
+
+    _defaultBMIStatus.setBMIValue(bmiCalc);
+    _defaultBMIStatus.calcBMIResult();
+  }
+
+  double getBMIValue () {
+    return _defaultBMIStatus.getBMIValue();
+  }
+
+  String getMsg() {
+    return _defaultBMIStatus.getMsg();
+  }
+
+  String getExplanation() {
+    return _defaultBMIStatus.getExplanation();
   }
 }

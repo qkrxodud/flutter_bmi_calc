@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bmi_calc/person_data.dart';
+import 'package:flutter_bmi_calc/result.dart';
+
+import 'default_bmi_status.dart';
 
 const Color activeCardColor = Color(0xff111328);
 const Color nonActiveCardColor = Color(0xff1d1e33);
@@ -13,7 +16,7 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
-  PersonData personData = PersonData(gender: Gender.male, height: 130.0, weight: 100, age: 20);
+  PersonData personData = PersonData(gender: Gender.male, height: 130.0, weight: 100, age: 20, defaultBMIStatus: DefaultBMIStatus());
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +70,7 @@ class _InputState extends State<Input> {
                           setState(() {
                             personData.setHeight(newValue);
                           });
-                        })
+                        }),
                   ],
                 ),
                 height: 50,
@@ -188,7 +191,7 @@ class _InputState extends State<Input> {
               child: Center(
                   child: TextButton(onPressed: () {
                     personData.calcBMI();
-
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Result(personData: personData,)));
                   }, child: const Text('Calc your BMI', style: TextStyle(color: Colors.white)), )),
               height: 50,
             )
